@@ -49,11 +49,11 @@ header {
     border-radius: 0.5rem;
     color: var(--complementary-color);
     margin-right: 1rem;
-    filter: brightness(1.3) saturate(0.6);
+    /* filter: brightness(1.3) saturate(0.6);
      text-shadow:
     0 0 4px var(--complementary-color-shadow),
     0 0 8px var(--complementary-color-shadow),
-    0 0 16px var(--complementary-color-shadow);
+    0 0 16px var(--complementary-color-shadow); */
 }
 
 label {
