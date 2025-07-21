@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather forecast</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="transparent">
+    <meta name="color-scheme" content="light dark">
 </head>
 <body>
   <header>
@@ -25,6 +28,7 @@
         <input 
             type="color" 
             class="color-picker" 
+            id="primary_color"
             oninput="setColor(this)">
     </label>
 
@@ -50,10 +54,11 @@
   </main>
 
   <footer>
+    <p class="copy">&copy; Alena Pumprová 2025</p>
     <p class="source">
-        Data poskutuje 
+        Data poskutuje   
         <a href="https://open-meteo.com/">
-            Open meteo
+            Open&nbsp;meteo
         </a>
     </p>
 </footer>   

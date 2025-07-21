@@ -4,28 +4,31 @@
     box-sizing: border-box;
 }
 
-:root {
-
-}
-
 body {
-    --base-color: #3d0053;
+    --base-color: #380b49;
+    --base-color-tr: oklch(from var(--base-color) calc(l *0.8) c h/0.8);
     --surface-color: oklch(from var(--base-color) calc(l * 1.2) c h);
     --background-tr:  oklch(from var(--text-color) l c h /0.1);
-    --brand-color: oklch(from var(--base-color) calc(l * 3) calc(c * 5) h);
-    --brand-color-dark: oklch(from var(--base-color) calc(l * 1.5) calc(c * 3) h);
-    --weather-box-color: oklch(from var(--base-color) calc(l * 2) calc(c *1.2) h/0.4);
+    --brand-color: oklch(from var(--base-color) calc(l * 3.5) calc(c * 3) h);
+    --brand-color-dark: oklch(from var(--base-color) calc(l * 1.5) calc(c * 2.5) h/0.8);
+    --weather-box-color: oklch(from var(--base-color) calc(l * 2.5) calc(c *0.9) h/0.4);
     --text-color: #f0f0f0;
     --box-background: oklch(from var(--text-color) l c h /0.4);
      --secondary-text-color: oklch(from var(--text-color) l c h /0.6);
-     --complementary-color: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180));    
+     --complementary-color: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180));
+     --complementary-color-shadow: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180)/0.4);
+     --complementary-color-light: oklch(from var(--complementary-color) calc(l * 5) calc(c * 0.7) calc(h + 5));    
     color: var(--text-color);
     font-family: Arial, Helvetica, sans-serif;
     max-width: 768px;
-    height: 100vh;
+    min-height: 100vh;
     margin: auto;
     padding: 0rem;
-    background-color: var(--base-color);   
+    background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
+     url(img/AdobeStock_1568342223.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;   
 }
 
 header {
@@ -34,17 +37,23 @@ header {
     align-items: center;
     justify-content: space-between;
     background-color: var(--brand-color-dark);
-    padding: 0.5rem 1rem;
+    background-color: transparent;
+    padding: 2.5rem 1rem;
 }
 
 .current-time {
     font-size: clamp(1.2rem, 2.2vw, 1.625rem);
     line-height: 1.2;
-    background-color: var(--base-color);
+    /* background-color: var(--base-color-tr); */
     padding: 0.2rem 0.5rem;
     border-radius: 0.5rem;
     color: var(--complementary-color);
     margin-right: 1rem;
+    filter: brightness(1.3) saturate(0.6);
+     text-shadow:
+    0 0 4px var(--complementary-color-shadow),
+    0 0 8px var(--complementary-color-shadow),
+    0 0 16px var(--complementary-color-shadow);
 }
 
 label {
@@ -63,8 +72,8 @@ label {
 
 label:hover {
     filter: brightness(1.5);
-    font-weight: 500;
-    transform: scale(1.01);
+    font-weight: 800;
+    transform: scale(1.1);
 }
 
 .visually-hidden {
@@ -79,19 +88,70 @@ label:hover {
   white-space: nowrap;
 }
 
-.color-picker {
+input[type="color"] {
+    all: unset;
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border: 0;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+input[type="color" i] {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: transparent;
+    cursor: default;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(169, 169, 169);
+    border-image: initial;
+    padding: 1px 2px;
+}
+
+input {
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    padding: 1px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+    transition: all 0.4s ease-out;
+}
+
+#primary_color{
+    position: absolute;
+    right: 0;
+    top: 2rem;
+    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
     border: none;
-    border-radius: 0.5rem;
-    width: 40px;
-    height: 40px;
+    outline: none;
+    margin: 0 0 0 0.5rem;
+    visibility: hidden;
+}
+
+#primary_color::-webkit-color-swatch-wrapper {
+    padding: 0; 
+}
+#primary_color::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+.color-picker {
+    all: unset;
     outline: none;
     padding: 0;
     margin: 0 0.5rem;
     appearance: none;
     -webkit-appearance: none;
     padding-inline: 0px;
-    /* inline-size: 60px; */
-    background-color: transparent;
+    overflow: hidden;
 }
 
  .icon {
@@ -105,7 +165,8 @@ main {
     margin: 0;
     padding: 2rem 1rem;
     background-color: var(--background-tr);
-    backdrop-filter: blur(5px);
+    border-radius: 0.5rem;
+    /* backdrop-filter: blur(5px); */
 }
 
 h1 {
@@ -123,10 +184,12 @@ h2 {
 a {
     color: var(--complementary-color);
     transition: all 0.4s ease-out;
+    text-decoration: none;
 }
 
 a:hover {
-    font-weight: 700;
+    text-decoration: underline;
+    color: var(--complementary-color-light);
 }
 
 .current-weather {
@@ -150,8 +213,12 @@ a:hover {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-self: stretch;
-    position: absolute;
+    position: relative;
     bottom: 0rem;
+    background-color: #0000001c;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin: 0.3rem 0.5rem;
 }
 
 .weather-details p {
@@ -178,7 +245,7 @@ a:hover {
     max-width: 18rem;
     height: auto;
     background-color: transparent;
-    padding: 0.5rem;
+    padding: 1rem 0.5rem;
     font-size: 40px;
     text-align: center;
 }
@@ -207,6 +274,11 @@ a:hover {
     border: 1px solid var(--weather-box-color);
     backdrop-filter: blur(5px);
     border-radius: 0.5rem;
+    
+    gap: 0.5rem;
+    padding: 0.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
 
 .forecast-5-day::-webkit-scrollbar ,
@@ -218,7 +290,7 @@ a:hover {
 
 .forecast-item {
     width: auto;
-    height: fit-content;
+    /* height: fit-content; */
     flex: 1 1 calc(100% / 5 - 1rem); /* pro 5 sloupců, uprav podle potřeby */
     min-width: 60px;
     display: flex;
@@ -226,12 +298,12 @@ a:hover {
     justify-content: flex-start;
     align-items: center;
     padding: 0.5rem;
-    margin: 0.3rem 0.5rem;
+    /* margin: 0.3rem 0.5rem; */
     border-radius: 0.5rem;
     background-color: var(--box-background);
-    border: 1px solid var(--box-background);
+    /* border: 1px solid var(--box-background); */
     backdrop-filter: blur(5px);
-    font-size: 14px; 
+    font-size: 14px;    
 }
 
 .forecast-hour {
@@ -245,10 +317,10 @@ a:hover {
     justify-content: flex-start;
     align-items: center;
     padding: 0.5rem 0.3rem;
-    margin: 0.3rem;
+    /* margin: 0.3rem; */
     border-radius: 0.5rem;
     background-color: var(--box-background);
-    border: 1px solid var(--box-background);
+    /* border: 1px solid var(--box-background); */
     backdrop-filter: blur(5px);
     font-size: 14px; 
 }
@@ -260,10 +332,20 @@ a:hover {
 
 footer {
     background-color: var(--brand-color-dark);
+    background-color: transparent;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
     padding: 1rem;
+}
+
+footer .source {
+    display: flex;
+    text-align: left;
+    padding-left: 0.5rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 @media screen and (max-width: 434px) {

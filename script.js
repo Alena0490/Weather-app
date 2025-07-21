@@ -98,11 +98,7 @@ const uvIndexEl = document.createElement('p');
 uvIndexEl.classList.add('uv-index');
 uvIndexEl.innerHTML = `<i class="fa-solid fa-sun"></i> <strong>UV Index:</strong> ${daily.uv_index_max[0]}`;
 
-const noteEl = document.createElement('p');
-noteEl.classList.add('weather-note');
-noteEl.textContent = `Poznámka: Pocitově ${current.temperature < 10 ? 'chladno' : current.temperature > 25 ? 'teplo' : 'příjemně'}.`;
-
-detailsBox.append(windEl, sunriseEl, sunsetEl, maxTempEl, minTempEl, uvIndexEl, noteEl);
+detailsBox.append(windEl, sunriseEl, sunsetEl, maxTempEl, minTempEl, uvIndexEl);
 
 // 🔧 Přidání do hlavního kontejneru
 weatherContainer.append(currentBox, detailsBox);
