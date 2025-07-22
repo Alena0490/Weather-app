@@ -1,5 +1,5 @@
 /*** Weather + poloha + ikona */
-
+//API for position
 navigator.geolocation.getCurrentPosition(pos => {
   const { latitude, longitude } = pos.coords;
   fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
@@ -10,6 +10,7 @@ navigator.geolocation.getCurrentPosition(pos => {
 
   });
 
+//API for weather
 const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,uv_index_max,weathercode&hourly=temperature_2m,weathercode,windspeed_10m&timezone=Europe%2FPrague`;
 
   fetch(url)
@@ -18,6 +19,14 @@ const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitu
       const daily = data.daily;
       const hourly = data.hourly;
       const current = data.current_weather;
+
+      // TESTOVACÍ kód – přepiš weathercode na libovolný:
+current.weathercode = 51; // bouřka
+
+      //Set backround - CSS class
+        const weatherClass = mapWeatherCodeToClass(current.weathercode);
+        document.body.classList.remove('sunny', 'cloudy', 'overcast', 'rainy', 'fog', 'storm', 'snow');
+        document.body.classList.add(weatherClass);
 
       const icon = getWeatherIcon(current.weathercode);
 
@@ -212,6 +221,18 @@ function getLightnessFromHex(hex) {
 
   const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
   return +(brightness * 100).toFixed(2); // správný výstup 0–100
+}
+
+/***Set page background */
+function mapWeatherCodeToClass(code) {
+  if (code === 0) return 'sunny';
+  if (code === 1 || code === 2) return 'cloudy';
+  if (code === 3) return 'overcast';
+  if (code >= 45 && code <= 48) return 'fog';
+  if ([51, 67, 80, 82].includes(code)) return 'rainy';
+  if (code >= 71 && code <= 77) return 'snow';
+  if (code >= 95) return 'storm';
+  return 'default';
 }
 
 
