@@ -21,7 +21,7 @@ const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitu
       const current = data.current_weather;
 
       // TESTOVACÍ kód – přepiš weathercode na libovolný:
-current.weathercode = 51; // bouřka
+      // current.weathercode = 71; // bouřka
 
       //Set backround - CSS class
         const weatherClass = mapWeatherCodeToClass(current.weathercode);
