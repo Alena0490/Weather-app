@@ -20,18 +20,31 @@ const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitu
       const hourly = data.hourly;
       const current = data.current_weather;
 
+      //Is Night?
+      // sunrise/sunset time strings
+const sunriseTime = daily.sunrise[0].split('T')[1].slice(0, 5);
+const sunsetTime = daily.sunset[0].split('T')[1].slice(0, 5);
+
+// parse them to real Date objects
+const now = new Date();
+const todayDate = now.toISOString().split('T')[0];
+const sunrise = new Date(`${todayDate}T${sunriseTime}:00`);
+const sunset = new Date(`${todayDate}T${sunsetTime}:00`);
+const night = isNight(now, sunrise, sunset);
+ 
+
       // TESTOVACÍ kód – přepiš weathercode na libovolný:
-      // current.weathercode = 71; // bouřka
+      // current.weathercode = 0; // bouřka
 
       //Set backround - CSS class
         const weatherClass = mapWeatherCodeToClass(current.weathercode);
         document.body.classList.remove('sunny', 'cloudy', 'overcast', 'rainy', 'fog', 'storm', 'snow');
         document.body.classList.add(weatherClass);
 
-      const icon = getWeatherIcon(current.weathercode);
+      const icon = getWeatherIcon(current.weathercode, night);
 
        renderFiveDayForecast(daily); // 5 dní
-       render24hForecast(hourly); // 24 h
+      render24hForecast(hourly, sunrise, sunset); // 24 h
 
       const timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 document.querySelector('.current-time').textContent = timeNow;
@@ -48,7 +61,7 @@ weatherContainer.innerHTML = '';
 const currentBox = document.createElement('div');
 currentBox.classList.add('current-box');
 
-const tempEl = document.createElement('p');
+const tempEl = document.createElement('div');
 tempEl.classList.add('current-temp');
 
 const iconSpan = document.createElement('span');
@@ -73,8 +86,6 @@ const windEl = document.createElement('p');
 windEl.classList.add('current-wind');
 windEl.innerHTML = `<i class="fa-solid fa-wind"></i> <strong>Vítr:</strong> ${current.windspeed} km/h`;
 
-const sunriseTime = daily.sunrise[0].split('T')[1].slice(0, 5);
-const sunsetTime = daily.sunset[0].split('T')[1].slice(0, 5);
 
 const sunriseEl = document.createElement('p');
 sunriseEl.classList.add('sunrise');
@@ -121,16 +132,16 @@ weatherContainer.append(currentBox, detailsBox);
 });
 
 //Ikony počasí
-function getWeatherIcon(code) {
-  if (code === 0) return '☀️';
-  if (code === 1) return '🌤️';
-  if (code === 2) return '⛅';
-  if (code === 3) return '☁️';
-  if (code >= 45 && code <= 48) return '🌫️';
-  if (code >= 51 && code <= 67) return '🌧️';
-  if (code >= 71 && code <= 77) return '❄️';
-  if (code >= 80 && code <= 82) return '🌦️';
-  if (code >= 95) return '⛈️';
+function getWeatherIcon(code, night = false) {
+  if (code === 0) return night ? '<img src="Hyper-realistic/31.png" alt="full moon icon" class="main-icon">' : '<img src="Hyper-realistic/32.png" alt="sun icon" class="main-icon">';         // jasno
+  if (code === 1) return night ? '<img src="Hyper-realistic/33.png" alt="full moon with a small cloud icon" class="main-icon">' : '<img src="Hyper-realistic/34.png" alt="sun with a small cloud icon" class="main-icon">';         // skoro jasno
+  if (code === 2) return night ? '<img src="Hyper-realistic/27.png" alt="full moon with a cloud icon" class="main-icon">' : '<img src="Hyper-realistic/28.png" alt="sun with a cloud icon" class="main-icon">';           // polojasno
+  if (code === 3) return '<img src="Hyper-realistic/44.png" alt="a cloud icon" class="main-icon">';
+  if (code >= 45 && code <= 48) return '<img src="Hyper-realistic/22.png" alt="fog icon" class="main-icon">';
+  if (code >= 51 && code <= 67) return '<img src="Hyper-realistic/12.png" alt="a rain cloud icon" class="main-icon">';
+  if (code >= 71 && code <= 77) return '<img src="Hyper-realistic/13.png" alt="a snow cloud icon" class="main-icon">';
+  if (code >= 80 && code <= 82) return '<img src="Hyper-realistic/39.png" alt="a rain cloud with a sun icon" class="main-icon">';
+  if (code >= 95) return '<img src="Hyper-realistic/1.png" alt="a storm cloud icon" class="main-icon">';
   return '❔';
 }
 
@@ -156,7 +167,7 @@ function renderFiveDayForecast(daily) {
 
     const weatherIcon = document.createElement('p');
     weatherIcon.classList.add('forecast-icon');
-    weatherIcon.textContent = icon;
+    weatherIcon.innerHTML = icon;
 
     const temp = document.createElement('p');
     temp.classList.add('forecast-temp');
@@ -169,34 +180,36 @@ function renderFiveDayForecast(daily) {
 
 
 /***24 hodin */
-function render24hForecast(hourly) {
+function render24hForecast(hourly, sunrise, sunset) {
   const container = document.querySelector('.forecast-24h');
   container.innerHTML = '';
 
   for (let i = 0; i < 24; i++) {
+    const time = new Date(hourly.time[i]);
+    const isNightForHour = isNight(time, sunrise, sunset);
     const timeText = new Date(hourly.time[i]).toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit'
     });
     const temp = hourly.temperature_2m[i];
-    const icon = getWeatherIcon(hourly.weathercode[i]);
+    const icon = getWeatherIcon(hourly.weathercode[i], isNightForHour);
 
     const item = document.createElement('div');
     item.classList.add('forecast-hour');
 
-    const time = document.createElement('p');
-    time.classList.add('hour-time');
-    time.innerHTML = `<strong>${timeText}</strong>`;
+    const timeEl = document.createElement('p');
+    timeEl.classList.add('hour-time');
+    timeEl.innerHTML = `<strong>${timeText}</strong>`;
 
     const weatherIcon = document.createElement('p');
     weatherIcon.classList.add('hour-icon');
-    weatherIcon.textContent = icon;
+    weatherIcon.innerHTML = icon;
 
     const temperature = document.createElement('p');
     temperature.classList.add('hour-temp');
-    temperature.textContent = `${temp} °C`;
+    temperature.innerHTML = `${temp} °C`;
 
-    item.append(time, weatherIcon, temperature);
+    item.append(timeEl, weatherIcon, temperature);
     container.appendChild(item);
   }
 }
@@ -229,11 +242,15 @@ function mapWeatherCodeToClass(code) {
   if (code === 1 || code === 2) return 'cloudy';
   if (code === 3) return 'overcast';
   if (code >= 45 && code <= 48) return 'fog';
-  if ([51, 67, 80, 82].includes(code)) return 'rainy';
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'rainy';
   if (code >= 71 && code <= 77) return 'snow';
   if (code >= 95) return 'storm';
   return 'default';
 }
 
+/***Is night? */
+function isNight(now, sunrise, sunset) {
+  return now < sunrise || now >= sunset;
+}
 
 
