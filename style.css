@@ -567,8 +567,9 @@ footer .source {
     gap: 0.5rem;
 }
 @media screen and (max-width: 434px) {
-    label {
-        /* display: none; */
+    .scroll-left,
+    .scroll-right {
+        display: none;
     }
     
 }
