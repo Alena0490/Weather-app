@@ -1,3 +1,4 @@
+
 /*** Weather + poloha + ikona */
 //API for position
 navigator.geolocation.getCurrentPosition(pos => {
@@ -34,7 +35,7 @@ const night = isNight(now, sunrise, sunset);
  
 
       // TESTOVACÍ kód – přepiš weathercode na libovolný:
-      current.weathercode = 51; // bouřka
+      // current.weathercode = 51; // bouřka
 
       //Set backround - CSS class
         const weatherClass = mapWeatherCodeToClass(current.weathercode, night);

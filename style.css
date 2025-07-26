@@ -10,6 +10,7 @@ html {
 
 body {
     --base-color: #380b49;
+    color: #585858;
     --base-color-tr: oklch(from var(--base-color) calc(l *0.8) c h/0.6);
     --surface-color: oklch(from var(--base-color) calc(l * 1.2) c h);
     --background-tr:  oklch(from var(--text-color) l c h /0.1);
