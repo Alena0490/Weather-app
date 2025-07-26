@@ -34,11 +34,11 @@ const night = isNight(now, sunrise, sunset);
  
 
       // TESTOVACÍ kód – přepiš weathercode na libovolný:
-      // current.weathercode = 0; // bouřka
+      current.weathercode = 51; // bouřka
 
       //Set backround - CSS class
-        const weatherClass = mapWeatherCodeToClass(current.weathercode);
-        document.body.classList.remove('sunny', 'cloudy', 'overcast', 'rainy', 'fog', 'storm', 'snow');
+        const weatherClass = mapWeatherCodeToClass(current.weathercode, night);
+        document.body.className = ''; 
         document.body.classList.add(weatherClass);
 
       const icon = getWeatherIcon(current.weathercode, night);
@@ -133,15 +133,16 @@ weatherContainer.append(currentBox, detailsBox);
 
 //Ikony počasí
 function getWeatherIcon(code, night = false) {
-  if (code === 0) return night ? '<img src="Hyper-realistic/31.png" alt="full moon icon" class="main-icon">' : '<img src="Hyper-realistic/32.png" alt="sun icon" class="main-icon">';         // jasno
-  if (code === 1) return night ? '<img src="Hyper-realistic/33.png" alt="full moon with a small cloud icon" class="main-icon">' : '<img src="Hyper-realistic/34.png" alt="sun with a small cloud icon" class="main-icon">';         // skoro jasno
-  if (code === 2) return night ? '<img src="Hyper-realistic/27.png" alt="full moon with a cloud icon" class="main-icon">' : '<img src="Hyper-realistic/28.png" alt="sun with a cloud icon" class="main-icon">';           // polojasno
-  if (code === 3) return '<img src="Hyper-realistic/44.png" alt="a cloud icon" class="main-icon">';
-  if (code >= 45 && code <= 48) return '<img src="Hyper-realistic/22.png" alt="fog icon" class="main-icon">';
-  if (code >= 51 && code <= 67) return '<img src="Hyper-realistic/12.png" alt="a rain cloud icon" class="main-icon">';
-  if (code >= 71 && code <= 77) return '<img src="Hyper-realistic/13.png" alt="a snow cloud icon" class="main-icon">';
-  if (code >= 80 && code <= 82) return '<img src="Hyper-realistic/39.png" alt="a rain cloud with a sun icon" class="main-icon">';
-  if (code >= 95) return '<img src="Hyper-realistic/1.png" alt="a storm cloud icon" class="main-icon">';
+  if (code === 0) return night ? '<img src="Glass-morphism/moon2.png" alt="full moon icon" class="main-icon">' : '<img src="Glass-morphism/sunny2.png" alt="sun icon" class="main-icon">';         // jasno
+  if (code === 1) return night ? '<img src="Glass-morphism/cloudy-moon2.png" alt="full moon with a small cloud icon" class="main-icon">' : '<img src="Glass-morphism/cloudy2.png" alt="sun with a small cloud icon" class="main-icon">';         // skoro jasno
+  if (code === 2) return night ? '<img src="Glass-morphism/cloudy-moon2.png" alt="full moon with a cloud icon" class="main-icon">' : '<img src="Glass-morphism/cloudy2.png" alt="sun with a cloud icon" class="main-icon">';           // polojasno
+  if (code === 3) return '<img src="Glass-morphism/overcast2.png" alt="a cloud icon" class="main-icon">';
+  if (code >= 45 && code <= 48) return '<img src="Glass-morphism/fog2.png" alt="fog icon" class="main-icon">';
+  if (code >= 51 && code <= 67) return '<img src="Glass-morphism/rain2.png" alt="a rain cloud icon" class="main-icon">';
+  if (code >= 71 && code <= 77) return '<img src="Glass-morphism/snow2.png" alt="a snow cloud icon" class="main-icon">';
+  if (code >= 80 && code <= 82) return '<img src="Glass-morphism/showers2.png" alt="a rain cloud with a sun icon" class="main-icon">';
+  if (code === 95) return '<img src="Glass-morphism/storm2.png" alt="a storm cloud icon" class="main-icon">';
+  if (code > 95) return '<img src="Glass-morphism/hailstorm2.png" alt="a storm cloud icon" class="main-icon">';
   return '❔';
 }
 
@@ -214,6 +215,22 @@ function render24hForecast(hourly, sunrise, sunset) {
   }
 }
 
+/***Is night? */
+function isNight(now, sunrise, sunset) {
+  return now < sunrise || now >= sunset;
+}
+
+/***Set page background */
+function mapWeatherCodeToClass(code, night = false) {
+  if (code === 0) return night ? 'clear-night' : 'sunny';
+  if (code === 1 || code === 2) return night ? 'cloudy-night' : 'cloudy';
+  if (code === 3) return night ? 'overcast-night' : 'overcast';
+  if (code >= 45 && code <= 48) return night ? 'fog-night' : 'fog';
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return night ? 'rainy-night' : 'rainy';
+  if (code >= 71 && code <= 77) return night ? 'snow-night' : 'snow';
+  if (code >= 95) return night ? 'storm-night' : 'storm';
+  return 'default';
+}
 
 /**Set color */
 function setColor(input) {
@@ -222,6 +239,7 @@ function setColor(input) {
   document.body.setAttribute('style', `
     --base-color: ${input.value};
     --text-color: ${lightness > 60 ? 'black' : 'white'};
+     --brand-color: ${lightness > 60 ? '#111' : '#f0f0f0'};
   `);
 }
 
@@ -236,21 +254,14 @@ function getLightnessFromHex(hex) {
   return +(brightness * 100).toFixed(2); // správný výstup 0–100
 }
 
-/***Set page background */
-function mapWeatherCodeToClass(code) {
-  if (code === 0) return 'sunny';
-  if (code === 1 || code === 2) return 'cloudy';
-  if (code === 3) return 'overcast';
-  if (code >= 45 && code <= 48) return 'fog';
-  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'rainy';
-  if (code >= 71 && code <= 77) return 'snow';
-  if (code >= 95) return 'storm';
-  return 'default';
+//Theme color
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const baseColor = getComputedStyle(document.body).getPropertyValue('--base-color').trim();
+
+if (themeColorMeta && baseColor) {
+    themeColorMeta.setAttribute('content', baseColor);
 }
 
-/***Is night? */
-function isNight(now, sunrise, sunset) {
-  return now < sunrise || now >= sunset;
-}
+
 
 

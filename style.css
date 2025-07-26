@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     --base-color: #380b49;
     --base-color-tr: oklch(from var(--base-color) calc(l *0.8) c h/0.6);
@@ -47,6 +51,7 @@ body.cloudy {
     background-position: center center; 
 }
 
+body.overcast,
 body.overcast {
     background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
         url(img/overcast.webp);
@@ -55,7 +60,8 @@ body.overcast {
     background-position: center center;   
 }
 
-body.rainy {
+body.rainy,
+body.rainy-night {
     background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
         url(img/rain.webp);
     background-size: cover;
@@ -79,9 +85,43 @@ body.storm {
     background-position: center center; 
 }
 
-body.snow {
+body.snow,
+body.snow-night {
     background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
         url(img/snow.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
+
+
+body.clear-night {
+    background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
+        url(img/milky-way-ocean.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
+
+body.storm-night {
+    background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
+        url(img/storm-night.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
+
+body.cloudy-night {
+    background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
+        url(img/cloudy-night.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
+
+body.fog-night {
+    background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
+        url(img/fog-night.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
@@ -230,13 +270,14 @@ h1 {
     font-size: clamp(1.2rem, 2.2vw, 1.625rem);
     line-height: 1.2;
     text-align: center;
+    text-shadow: 0x 0px 4px var(--base-color);
 }
 
 h2 {
     color: var(--brand-color);
     text-align: center;
     text-transform: uppercase;
-    text-shadow: 0 0 4px var(--background-tr);
+    text-shadow: 0 0 4px var(--background);
 }
 
 a {
@@ -250,6 +291,53 @@ a:hover {
     color: var(--complementary-color-light);
 }
 
+    .scroll-left,
+    .scroll-right {
+        padding: 0.5rem;
+        font-size: 26px;
+        background-color: transparent;
+        text-shadow: 0px 0px 10px var(--base-color);
+        border: none;
+        color: var(--complementary-color);
+    }
+
+    .scroll-left:hover,
+    .scroll-right:hover,
+    .scroll-left:focus,
+    .scroll-right:focus {
+        color: var(--complementary-color-light);
+        filter: brightness(1.1);
+    }
+
+    .scroll-left i,
+    .scroll-right i {
+        display: inline-block;
+        transition: transform 0.2s ease-out, filter 0.3s ease;
+        will-change: transform;
+    }
+
+    .scroll-left:hover i,
+    .scroll-right:hover i {
+        transform: scale(1.2);
+    }
+
+   .scroll-left {
+        position: absolute;
+        top: 50%;
+        left: 0rem;
+        transform: translateY(-50%);
+        z-index: 900;
+    }
+
+    .scroll-right {
+        position: absolute;
+        top: 50%;
+        right: 0rem;
+        transform: translateY(-50%);
+        z-index: 900;
+
+    }
+
 .current-weather {
     position: relative;
     margin-top: 1rem;
@@ -262,14 +350,20 @@ a:hover {
     font-size: 14px; 
     background-color: var(--weather-box-color);
     border: 1px solid var(--weather-box-color);
-    backdrop-filter: blur(5px);
+    backdrop-filter: 
+        blur(5px)
+        drop-shadow(4px 4px 10px var(--base-color-tr));
+    filter: drop-shadow(4px 4px 10px var(--background));
     border-radius: 0.5rem;
 }
 
 .current-weather img.main-icon {
     height: 9rem;
     width: auto;
-    filter: saturate(1.1) contrast(1.1);
+    filter: 
+    saturate(1.1) 
+    contrast(1.1)
+    drop-shadow(0 0 3px rgba(0, 0, 0, 0.258));
 }
 
 .current-box {
@@ -341,11 +435,11 @@ a:hover {
 .forecast-5-day-wrapper,
 .forecast-24h-wrapper {
     margin-top: 2rem;
+    position: relative;
 }
 
 .forecast-5-day,
 .forecast-24h {
-    min-height: 12vh;
     overflow-x: auto;
     scrollbar-width: none;      /* Firefox */
     -ms-overflow-style: none;
@@ -356,12 +450,23 @@ a:hover {
     align-items: stretch;
     background-color: var(--weather-box-color);
     border: 1px solid var(--weather-box-color);
-    backdrop-filter: blur(5px);
+    backdrop-filter: 
+        blur(5px) 
+        drop-shadow(4px 4px 10px var(--base-color-tr));
+    filter: drop-shadow(4px 4px 10px var(--base-color));
     border-radius: 0.5rem;   
     gap: 0.5rem;
     padding: 0.5rem;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+}
+
+.forecast-5-day {
+    min-height: 8vh;
+}
+
+.forecast-24h {
+    min-height: 12vh;
 }
 
 .forecast-5-day::-webkit-scrollbar ,
@@ -374,6 +479,7 @@ a:hover {
 .forecast-item {
     width: auto;
     /* height: fit-content; */
+    max-height: 110px;
     flex: 1 1 calc(100% / 5 - 1rem); /* pro 5 sloupců, uprav podle potřeby */
     min-width: 60px;
     display: flex;
@@ -385,7 +491,10 @@ a:hover {
     border-radius: 0.5rem;
     background-color: var(--box-background);
     /* border: 1px solid var(--box-background); */
-    backdrop-filter: blur(5px);
+    backdrop-filter: 
+        blur(5px)
+        drop-shadow(4px 4px 10px var(--base-color-tr));
+    filter: drop-shadow(4px 4px 10px var(--base-color));
     font-size: 14px;
     transition:  filter 0.6s ease-out;    
 }
@@ -409,7 +518,10 @@ a:hover {
     border-radius: 0.5rem;
     background-color: var(--box-background);
     /* border: 1px solid var(--box-background); */
-    backdrop-filter: blur(5px);
+    backdrop-filter: 
+        blur(5px)
+        drop-shadow(4px 4px 10px var(--base-color-tr));
+    filter: drop-shadow(4px 4px 10px var(--background));
     font-size: 14px; 
     transition: filter 0.6s ease-out;
 }
@@ -428,7 +540,8 @@ a:hover {
     font-size: 26px;
     width: auto;
     height: 38px;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+    filter: 
+        drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
     transition: all 0.6s ease-out;
 }
 
@@ -440,7 +553,10 @@ a:hover {
 .forecast-icon:hover,
 .hour-icon:hover {
     transform: scale(1.07);
-    filter: brightness(1.02) saturate(1.1);
+    filter: 
+    brightness(1.02) 
+    saturate(1.1)
+    drop-shadow(0 0 3px rgba(0, 0, 0, 0.458));
 }
 
 footer {
@@ -482,6 +598,11 @@ footer .source {
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
         margin: 0 auto;
+    }
+
+    .scroll-left,
+    .scroll-right {
+        display: none;
     }
 
     .current-weather-wrapper {
@@ -538,6 +659,29 @@ footer .source {
     }
 }
 
+
+@media screen and (max-width: 400px) and (max-height: 500px) {
+    header {
+        display: none;
+    }
+
+    main {
+        padding: 0rem 1rem;
+    }
+
+    h2 {
+        display: none;
+    }
+
+    .forecast-5-day-wrapper, .forecast-24h-wrapper {
+        margin-top: 1rem;
+    }
+
+    footer {
+        display: none;
+    }
+    
+}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: no-preference) {
