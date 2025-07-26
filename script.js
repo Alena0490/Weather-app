@@ -263,6 +263,44 @@ if (themeColorMeta && baseColor) {
     themeColorMeta.setAttribute('content', baseColor);
 }
 
+/**Scrolování */
+//Scroll doprava
+document.querySelector('.scroll-right').addEventListener('click', () => {
+       const hourBox = document.querySelector('.forecast-hour');
+if (!hourBox) return;
+
+const boxWidth = hourBox.getBoundingClientRect().width;
+const step = boxWidth * 3;
+
+const container = document.querySelector('.forecast-24h');
+const maxScroll = container.scrollWidth - container.clientWidth;
+//Scroll doprava
+if (container.scrollLeft + step <= maxScroll) {
+  container.scrollLeft += step;
+} else {
+  container.scrollLeft = maxScroll;
+}
+});
+
+//Scroll doleva
+document.querySelector('.scroll-left').addEventListener('click', () => {
+  const hourBox = document.querySelector('.forecast-hour');
+  if (!hourBox) return;
+
+  const boxWidth = hourBox.getBoundingClientRect().width;
+  const step = boxWidth * 3;
+
+  const container = document.querySelector('.forecast-24h');
+  //Scroll doleva
+  if (container.scrollLeft - step >= 0) {
+    container.scrollLeft -= step;
+  } else {
+    container.scrollLeft = 0;
+  }
+});
+
+
+
 
 
 
