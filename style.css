@@ -9,20 +9,22 @@ html {
 }
 
 body {
-    --base-color: #380b49;
-    color: #585858;
+    --base-color: #430d56;
+    --background-color: #585858;
     --base-color-tr: oklch(from var(--base-color) calc(l *0.8) c h/0.6);
     --surface-color: oklch(from var(--base-color) calc(l * 1.2) c h);
     --background-tr:  oklch(from var(--text-color) l c h /0.1);
-    --brand-color: oklch(from var(--base-color) calc(l * 3.5) calc(c * 3) h);
+    --brand-color: oklch(from var(--base-color) calc(l * 2.5) calc(c * 2) h);
     --brand-color-dark: oklch(from var(--base-color) calc(l * 1.5) calc(c * 2.5) h/0.8);
     --weather-box-color: oklch(from var(--base-color) calc(l * 2.5) calc(c *0.9) h/0.4);
+    --text-shadow: rgba(54, 54, 54, 0.593);
     --text-color: #f0f0f0;
     --box-background: oklch(from var(--text-color) l c h /0.4);
      --secondary-text-color: oklch(from var(--text-color) l c h /0.6);
      --complementary-color: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180));
      --complementary-color-shadow: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180)/0.4);
-     --complementary-color-light: oklch(from var(--complementary-color) calc(l * 5) calc(c * 0.7) calc(h + 5));    
+     --complementary-color-light: oklch(from var(--complementary-color) calc(l * 5) calc(c * 0.7) calc(h + 5));
+     --shadows: rgba(0, 0, 0, 0.6);    
     color: var(--text-color);
     font-family: Arial, Helvetica, sans-serif;
     max-width: 768px;
@@ -31,6 +33,7 @@ body {
     padding: 0rem;
     background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
         url(img/cloudy.webp);
+    background-blend-mode: hard-light;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;   
@@ -42,6 +45,7 @@ body.sunny {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top left; 
+    background-blend-mode: multiply; 
 }
 
 body.cloudy {
@@ -50,15 +54,17 @@ body.cloudy {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
+    background-blend-mode: color; 
 }
 
 body.overcast,
-body.overcast {
+body.overcast-night {
     background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
         url(img/overcast.webp);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;   
+    background-position: center center;
+    background-blend-mode: hard-light;    
 }
 
 body.rainy,
@@ -67,7 +73,8 @@ body.rainy-night {
         url(img/rain.webp);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center; 
+    background-position: center center;
+    background-blend-mode: hard-light; 
 }
 
 body.fog {
@@ -75,7 +82,8 @@ body.fog {
         url(img/fog.webp);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: top center;  
+    background-position: top center; 
+    background-blend-mode: darken; 
 }
 
 body.storm {
@@ -84,6 +92,7 @@ body.storm {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
+        background-blend-mode: hard-light;
 }
 
 body.snow,
@@ -92,7 +101,8 @@ body.snow-night {
         url(img/snow.webp);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center; 
+    background-position: center center;
+    background-blend-mode: screen;
 }
 
 
@@ -102,6 +112,7 @@ body.clear-night {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
+    background-blend-mode: hue;
 }
 
 body.storm-night {
@@ -110,6 +121,7 @@ body.storm-night {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
+    background-blend-mode: hue;
 }
 
 body.cloudy-night {
@@ -118,6 +130,7 @@ body.cloudy-night {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
+    background-blend-mode: hue;
 }
 
 body.fog-night {
@@ -126,6 +139,7 @@ body.fog-night {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
+    background-blend-mode: hue;
 }
 
 header {
@@ -269,7 +283,7 @@ h2 {
     color: var(--brand-color);
     text-align: center;
     text-transform: uppercase;
-    text-shadow: 0 0 4px var(--background);
+    text-shadow: 1px 1px 5px var(--text-shadow);
 }
 
 a {
@@ -283,22 +297,14 @@ a:hover {
     color: var(--complementary-color-light);
 }
 
-    .scroll-left,
-    .scroll-right {
-        padding: 0.5rem;
-        font-size: 26px;
-        background-color: transparent;
-        text-shadow: 0px 0px 10px var(--base-color);
-        border: none;
-        color: var(--complementary-color);
-    }
-
-    .scroll-left:hover,
-    .scroll-right:hover,
-    .scroll-left:focus,
-    .scroll-right:focus {
-        color: var(--complementary-color-light);
-        filter: brightness(1.1);
+.scroll-left,
+.scroll-right {
+    padding: 0.5rem;
+    font-size: 26px;
+    background-color: transparent;
+    text-shadow: 0px 0px 10px var(--base-color);
+    border: none;
+    color: var(--complementary-color);
     }
 
 .current-weather {
@@ -337,10 +343,10 @@ a:hover {
 }
 
 .weather-details {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-self: stretch;
+    width: calc(100% - 1rem);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     position: relative;
     bottom: 0rem;
     background-color: #0000001c;
@@ -350,20 +356,26 @@ a:hover {
 }
 
 .weather-details p {
-    padding: 0.1rem 0.3rem;
+    display: inline-flex;
+    padding: 0.2rem 0.3rem;
     margin: 0rem 0.5rem;
     border-radius: 0.5rem;
-    vertical-align: middle;
     line-height: 1.4;
+    align-items: center;
 }
 
 .weather-details p i,
 .weather-icon2,
 .weather-icon img {
-    font-size: 24px;
-    height: 28px;
-    margin: 0 0.3rem;
+    font-size: clamp(18px, 2.5vw, 24px);
+    height: clamp(21px, 2.9vw, 28px); /* 28/24 ≈ 1.166 */
+    margin: 0 0.5rem;
     color: var(--text-color);
+}
+
+.weather-details p.sunset,
+.weather-details p.sunrise {
+    padding: 0.2rem 0.3rem 0.2rem 0rem;
 }
 
 .current-temp {
@@ -532,7 +544,7 @@ a:hover {
     width: auto;
     height: 38px;
     filter: 
-        drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+        drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
     transition: all 0.6s ease-out;
 }
 
@@ -548,6 +560,11 @@ a:hover {
     brightness(1.02) 
     saturate(1.1)
     drop-shadow(0 0 3px rgba(0, 0, 0, 0.458));
+}
+
+.forecast-item p,
+.forecast-hour p {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5) ;
 }
 
 footer {
@@ -642,7 +659,7 @@ footer .source {
     }
 
     .forecast-hour {
-        padding: 0.3rem 0.3 rem;
+        padding: 0.3rem 0.3rem;
     }
 
     .forecast-item {
