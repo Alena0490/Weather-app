@@ -260,6 +260,9 @@ function setColor(input) {
   const brandFallback = isNightMode ? 'white' : 'black';
   const finalBrand = lightness > 60 ? brandFallback : brandColor;
   document.body.style.setProperty('--brand-color', finalBrand);
+
+  // SET localStorage
+  localStorage.setItem('baseColor', baseColor);
 }
 
 
@@ -282,6 +285,42 @@ const baseColor = getComputedStyle(document.body).getPropertyValue('--base-color
 
 if (themeColorMeta && baseColor) {
     themeColorMeta.setAttribute('content', baseColor);
+}
+
+//Reset colors
+const colorInput = document.getElementById('primary_color');
+const resetIcon = document.querySelector('.reset i');
+
+colorInput.addEventListener('input', () => {
+  resetIcon.style.display = 'inline-block';
+});
+
+document.querySelector('.reset').addEventListener('click', () => {
+  const defaultColor = '#572768';
+  colorInput.value = defaultColor;
+  setColor(colorInput);
+  localStorage.setItem('baseColor', defaultColor); // ← přidáno
+  resetIcon.style.display = 'none';
+});
+
+
+//HEX to RGB 
+function hexToRGB(hex) {
+  hex = hex.replace(/^#/, '');
+  const bigint = parseInt(hex, 16);
+  return {
+    r: (bigint >> 16) & 255,
+    g: (bigint >> 8) & 255,
+    b: bigint & 255,
+  };
+}
+
+// Load color from localStorage on page load
+const storedColor = localStorage.getItem('baseColor');
+if (storedColor) {
+  colorInput.value = storedColor;
+  setColor(colorInput);
+  resetIcon.style.display = 'inline-block';
 }
 
 /**Scrolování */

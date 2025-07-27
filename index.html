@@ -12,7 +12,7 @@
 <body>
   <header>
     <time datetime="20:00" class="current-time">20:00</time>
-    <h1 class="current-location">Aktuální poloha</h1>
+    <h1 class="current-location">Aktuální poloha</h1>    
     <label class="color-label">
         <span class="visually-hidden">Zvolit barvu</span>
             <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
@@ -31,6 +31,10 @@
             id="primary_color"
             title="Vyber barvu, dvojklik pro reset hodnot"
             oninput="setColor(this)">
+
+        <button class="reset" aria-label="Zrušit nastavení barev" type="button">
+            <i class="fa-solid fa-ban"></i>
+        </button>
     </label>
 
   </header>
@@ -65,7 +69,7 @@
             Open&nbsp;Meteo
         </a>
     </p>
-</footer>   
+</footer> 
     <script src="script.js"></script>
 </body>
 </html>

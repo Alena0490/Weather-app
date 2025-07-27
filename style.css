@@ -161,23 +161,24 @@ header {
 }
 
 label {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
     max-width: 180px;
     margin-left: 1rem;
     color: var(--text-color);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
     font-size: clamp(1rem, 1.1vw, 1.625rem);
     line-height: 1.2;
     transition: all 0.4s ease-out;
 }
 
-label:hover {
+label svg:hover {
     filter: brightness(1.5);
     font-weight: 800;
     transform: scale(1.1);
+    color: var(--complementary-color);
 }
 
 .visually-hidden {
@@ -259,9 +260,33 @@ input {
 }
 
  .icon {
-    height: 30px;
+    height: clamp(1.6rem, 1.9vw, 2.6rem);
     width: auto;
     color: var(--text-color);
+}
+
+.reset {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    opacity: 0.8;
+    padding-left: 0.5rem;
+}
+
+.reset i {
+    display: none;
+    width: 30px;
+    height: auto;
+    font-size: clamp(1.5rem, 1.7vw, 2.5rem);
+}
+
+.reset:hover {
+    filter: brightness(1.5);
+    font-weight: 800;
+    transform: scale(1.1);
+    opacity: 1;
+    color: var(--complementary-color);
 }
 
 main {
@@ -444,6 +469,8 @@ a:hover {
     min-height: 12vh;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    justify-content: flex-start;
+    scroll-padding-left: 0.5rem;
 
 }
 
@@ -498,7 +525,7 @@ a:hover {
     backdrop-filter: 
         blur(5px)
         drop-shadow(4px 4px 10px var(--base-color-tr));
-    filter: drop-shadow(4px 4px 10px var(--base-color));
+    filter: drop-shadow(3px 3px 5px var(--base-color));
     font-size: 14px;
     transition:  filter 0.6s ease-out;    
 }
@@ -523,7 +550,7 @@ a:hover {
     backdrop-filter: 
         blur(5px)
         drop-shadow(4px 4px 10px var(--base-color-tr));
-    filter: drop-shadow(4px 4px 10px var(--background));
+    filter: drop-shadow(3px 3px 5px var(--base-color));
     font-size: 14px; 
     transition: filter 0.6s ease-out;
     scroll-snap-align: start;
