@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather forecast</title>
+    <title>Barevné počasí</title>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -44,25 +44,44 @@
   </header>
 
   <main>
-    <div class="current-weather-wrapper">
-        <h2>Aktuálně</h2>
-        <div class="current-weather"></div>
-    </div>
+    <div class="container">
+        <sction class="current-weather-wrapper">
+            <h2>Aktuálně</h2>
+            <div class="current-weather"></div>
+        </sction>
     
-    <div class="forecast">
-        <div class="forecast-5-day-wrapper">
-            <h2>Předpověď na 5 dní</h2>
-                <div class="forecast-5-day" tabindex="0"></div>
-        </div>
+        <section class="forecast">
+            <article class="forecast-5-day-wrapper">
+                <h2>Předpověď na 5 dní</h2>
+                <div class="forecast-5-day" tabindex="0">Načítám data</div>
+            </article>
 
-        <div class="forecast-24h-wrapper">
-            <h2>Předpověď na 24 hodin</h2>
-            <button class="scroll-left" aria-label="Předchozí"><i class="fa-solid fa-chevron-left"></i></button>
-            <div class="forecast-24h" tabindex="0"></div>
-            <button class="scroll-right" aria-label="Další"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
+            <article class="forecast-24h-wrapper">
+                <h2>Předpověď na 24 hodin</h2>
+                <button class="scroll-left" aria-label="Předchozí"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="forecast-24h" tabindex="0">Načítám data</div>
+                <button class="scroll-right" aria-label="Další"><i class="fa-solid fa-chevron-right"></i></button>
+            </article>
+        </section>
     </div>
 
+    <section class="git-hub-widget">
+        <div class="game">
+            <a href="https://alena0490.github.io/Nu-pogodi/" aria-label="Hra Nu Pogodi">
+                <img src="img/rabbit.webp" alt=" animovaný králík zvonící na zvonek">
+            </a>
+        </div>
+        <div class="game-description">
+            <h2>Hra Nu Pogodi</h2>
+            <p>Pamatujete si na starou hru s vlkem chytajícím vajíčka? Zkuste její moderní verzi. Klasická hra z 80. let v originálním retro designu včetně zvukových efektů.</p>
+            <hr>
+            <p class="contact">Sledujte mě:</p>           
+            <div class="social-media">
+                <a href="https://github.com/Alena0490/"><i class="fa-brands fa-square-github"></i>GitHub</a>
+                <a href="https://www.linkedin.com/in/alena-pumprova/"><i class="fa-brands fa-linkedin"></i>LinekdIn</a>
+            </div>
+        </div>
+    </section>   
   </main>
 
   <footer>

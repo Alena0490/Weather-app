@@ -287,6 +287,7 @@ h1 {
 h2 {
     color: var(--brand-color);
     text-align: center;
+    font-size: 1.5rem;
     text-transform: uppercase;
     text-shadow: 1px 1px 5px var(--text-shadow);
 }
@@ -312,8 +313,9 @@ a:hover {
     color: var(--complementary-color);
     }
 
-.current-weather {
-    position: relative;
+.current-weather,
+.git-hub-widget {
+        position: relative;
     margin-top: 1rem;
     min-height: 40vh;
     display: flex;
@@ -393,7 +395,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     max-width: 18rem;
-    height: auto;
+    height: 100%;
     background-color: transparent;
     padding: 1rem 0.5rem;
     font-size: 40px;
@@ -404,12 +406,17 @@ a:hover {
     width: 100%;
     height: auto;
     font-size: clamp(3.5rem, 10vw, 6.5rem);
-    height: clamp(3.5rem, 10vw, 6.5rem);
+    height: clamp(3rem, 30vw, 7rem);
+ }
+
+ .weather-icon {
+    position: relative;
  }
 
  .weather-value {
-    margin-top: -2rem;
+    margin-top: 1rem;
     text-shadow: 0 0 4px var(--base-color-tr);
+    position: relative;
  }
 
 .forecast-5-day-wrapper,
@@ -575,6 +582,66 @@ a:hover {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5) ;
 }
 
+.git-hub-widget {
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.git-hub-widget h2 {
+        color: var(--text-color);
+    }
+
+.game {
+    border-radius: 0.5rem;
+    padding: 2rem;
+    background-color: var(--box-background);
+    backdrop-filter: blur(5px) drop-shadow(4px 4px 10px var(--base-color-tr));
+    filter: drop-shadow(3px 3px 5px var(--base-color));
+}
+
+.game img {
+    width: 100%;
+    border-radius: 0.5rem; 
+    transition: all 0.6s ease-out;      
+}
+
+.game img:hover {
+    transform:scale(1.04) ;
+}
+
+.game-description p {
+    margin: 1rem;
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+
+.game-description p.contact {
+    margin-bottom: 0;
+}
+
+.social-media {
+    padding: 0rem 0.5rem 0.5rem 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.social-media a {
+    padding: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.social-media i {
+    margin-right: 0.5rem;
+    transition: all 0.6s ease-out;
+}
+
+.social-media a:hover i {
+    transform: scale(1.1);
+}
+
 footer {
     background-color: rgba(0, 0, 0, 0.171);
     display: flex;
@@ -602,7 +669,7 @@ footer .source {
         padding: 2rem 1rem 0.5rem;
     }
     
-    main {
+    .container {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
@@ -613,7 +680,8 @@ footer .source {
         height: calc(100% - 2.5rem);
     }
 
-    .current-weather {
+    .current-weather,
+    .git-hub-widget {
         height:  100%;
         margin-top: 0.5rem;
     }
@@ -662,6 +730,40 @@ footer .source {
     .forecast-hour {
         padding: 0.3rem 0.3rem;
     }
+
+    section.git-hub-widget {
+        display: grid;
+        align-items: start;
+        gap: 1.5rem;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        padding:  2rem;
+    }
+
+    /* .git-hub-widget h2 {
+        color: #cc0000;
+    } */
+
+    .game {
+
+    }
+
+    .game img {
+        border-radius: 0.5rem;
+        width: 100%;
+    }
+
+    .game-description {
+        
+    }
+
+    .game-description p {
+        margin: 1rem;
+        font-size: 20px;
+        line-height: 1.4;
+    }
 }
 
 @media screen and (max-width: 434px) {
@@ -677,7 +779,7 @@ footer .source {
         display: none;
     }
 
-    main {
+    .container {
         padding: 0rem 1rem;
     }
 
