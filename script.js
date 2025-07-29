@@ -284,9 +284,16 @@ function setColor(input) {
 
   document.body.style.setProperty('--text-color', textColor);
 
+  // COMPLEMENTARY COLOR: according to contrast (lightness)
+  const complementaryColor = lightness > 17
+  ? 'oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180))'
+  : '#f0f0f0';
+
+document.body.style.setProperty('--complementary-color', complementaryColor);
+
   // BRAND COLOR: switch brandColor and fallback (white/black)
   const brandFallback = isNightMode ? 'white' : 'black';
-  const finalBrand = lightness > 60 ? brandFallback : brandColor;
+  const finalBrand = lightness > 65 ? brandFallback : brandColor;
   document.body.style.setProperty('--brand-color', finalBrand);
 
   // SET localStorage

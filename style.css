@@ -24,7 +24,7 @@ body {
      --complementary-color: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180));
      --complementary-color-shadow: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180)/0.4);
      --complementary-color-light: oklch(from var(--complementary-color) calc(l * 5) calc(c * 0.7) calc(h + 5));
-     --shadows: rgba(0, 0, 0, 0.6);    
+     --shadows: rgba(0, 0, 0, 0.6);       
     color: var(--text-color);
     font-family: Arial, Helvetica, sans-serif;
     max-width: 768px;
@@ -313,9 +313,13 @@ a:hover {
     color: var(--complementary-color);
     }
 
+.current-weather {
+    padding-top: 1rem;
+}
+
 .current-weather,
 .git-hub-widget {
-        position: relative;
+    position: relative;
     margin-top: 1rem;
     min-height: 40vh;
     display: flex;
@@ -582,7 +586,15 @@ a:hover {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5) ;
 }
 
+hr {
+    margin: 2rem 0rem;
+    border: none;
+}
+
 .git-hub-widget {
+    border: none;
+    background: none;
+    backdrop-filter: none;
     gap: 1.5rem;
     padding: 1.5rem;
 }
@@ -594,8 +606,8 @@ a:hover {
 .game {
     border-radius: 0.5rem;
     padding: 2rem;
-    background-color: var(--box-background);
-    backdrop-filter: blur(5px) drop-shadow(4px 4px 10px var(--base-color-tr));
+    /* background-color: var(--box-background); */
+    /* backdrop-filter: blur(5px) drop-shadow(4px 4px 10px var(--base-color-tr)); */
     filter: drop-shadow(3px 3px 5px var(--base-color));
 }
 
@@ -611,7 +623,7 @@ a:hover {
 
 .game-description p {
     margin: 1rem;
-    font-size: 1.5rem;
+    font-size: 14px;
     line-height: 1.4;
 }
 
@@ -630,7 +642,7 @@ a:hover {
 
 .social-media a {
     padding: 0.5rem;
-    font-size: 1.5rem;
+    font-size: 14px;
 }
 
 .social-media i {
@@ -733,7 +745,7 @@ footer .source {
 
     section.git-hub-widget {
         display: grid;
-        align-items: start;
+        align-items: center;
         gap: 1.5rem;
         grid-template-columns: 1fr 2fr;
         grid-template-rows: 1fr;
@@ -761,7 +773,7 @@ footer .source {
 
     .game-description p {
         margin: 1rem;
-        font-size: 20px;
+        font-size: 14px;
         line-height: 1.4;
     }
 }
