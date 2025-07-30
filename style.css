@@ -631,7 +631,7 @@ hr.basic {
 
 .game-img:hover {
     background: url(img/rabbit.webp);
-    background-size: cover;
+    background-size: contain;
     background-position: center center;
     /* transform:scale(1.04) ; */
     animation: animate 0.5s ease-out infinite alternate;
