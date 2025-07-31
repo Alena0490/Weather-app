@@ -362,6 +362,10 @@ if (storedColor) {
   resetIcon.style.display = 'none';
 }
 
+  //Set Color (calling the function)
+//   document.getElementById('primary_color').addEventListener('input', function () {
+//   setColor(this);
+// });
 
 /** 24 hours - Scrollling */
 //When clicking the right arrow – scrolls 3 forecast boxes to the right
