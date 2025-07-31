@@ -15,7 +15,7 @@ body {
     --base-color-tr: oklch(from var(--base-color) calc(l *0.8) c h/0.6);
     --surface-color: oklch(from var(--base-color) calc(l * 1.2) c h);
     --background-tr:  oklch(from var(--text-color) l c h /0.1);
-    --brand-color: oklch(from var(--base-color) calc(l * 2.5) calc(c * 2) h);
+    --brand-color: oklch(from var(--base-color) calc(l * 3) calc(c * 2) h);
     --brand-color-dark: oklch(from var(--base-color) calc(l * 1.5) calc(c * 2.5) h/0.8);
     --weather-box-color: oklch(from var(--base-color) calc(l * 2.5) calc(c *0.9) h/0.4);
     --text-shadow: rgba(54, 54, 54, 0.593);
@@ -162,12 +162,13 @@ header {
     margin-right: 1rem;
 }
 
-label {
+.color-label {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: flex-start;
     max-width: 180px;
+    padding: 0rem 2rem;
     margin-left: 1rem;
     color: var(--text-color);
     cursor: pointer;
@@ -176,7 +177,7 @@ label {
     transition: all 0.4s ease-out;
 }
 
-label svg:hover {
+.color-label svg:hover {
     filter: brightness(1.5);
     font-weight: 800;
     transform: scale(1.1);
@@ -242,7 +243,7 @@ input[type="color" i] {
 }
 
  .icon {
-    height: clamp(1.6rem, 1.9vw, 2.6rem);
+    height: clamp(1.7rem, 3vw, 3rem);
     width: auto;
     color: var(--text-color);
 }
@@ -260,7 +261,7 @@ input[type="color" i] {
 .reset i {
     width: 30px;
     height: auto;
-    font-size: clamp(1.5rem, 1.7vw, 2.5rem);
+    font-size: clamp(1.7rem, 3vw, 3rem);
 }
 
 .reset:hover {
@@ -589,12 +590,13 @@ a:hover {
 }
 
 hr.basic {
-    margin: 2rem 0rem;
+    margin: 1.5rem 0rem;
     border: none;
 }
 
 .git-hub-widget {
     border: none;
+    min-height: 30vh;
     background: none;
     backdrop-filter: none;
     gap: 1.5rem;
@@ -618,25 +620,28 @@ hr.basic {
 .game-img {
     background: url(img/rabbitb.webp);
     background-size: contain;
-    background-position: center center;
+    background-position: bottom center;
     width: 100%;
     min-width: 14rem;
     height: 14rem;
     border-radius: 0.5rem; 
     animation: none;
+    -webkit-box-reflect: below -4rem
+    linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 40%);
     /* animation-play-state: paused !important; */
     transition: all 0.6s ease-out;
           
 }
 
 .game-img:hover {
-    background: url(img/rabbit.webp);
+    background: url(img/rabbitb.webp);
     background-size: contain;
     background-position: center center;
-    /* transform:scale(1.04) ; */
+    transform:scale(1.02) ;
+    /* filter: brightness(1.1); */
     animation: animate 0.5s ease-out infinite alternate;
-    /* animation-play-state: running !important; */
-    -webkit-box-reflect: below 0
+    animation-play-state: running !important;
+    -webkit-box-reflect: below -4rem
     linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 40%);
 }
 
@@ -777,7 +782,7 @@ footer .source {
         grid-template-columns: 1fr 2fr;
         grid-template-rows: 1fr;
         gap: 1.5rem;
-        margin-top: 1.5rem;
+        margin-top: 0rem;
         padding:  2rem;
     }
 
@@ -861,7 +866,7 @@ footer .source {
 
 @keyframes animate {
     0% {
-        background-image: url(img/rabbit.webp);
+        background-image: url(img/rabbitb.webp);
     }
     50% {
         background-image: url(img/rabbit1.webp);

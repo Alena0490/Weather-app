@@ -279,7 +279,7 @@ function setColor(input) {
 
   // TEXT COLOR: black or white
   const textColor = isNightMode
-    ? (lightness > 60 ? 'white' : 'var(--brand-color)')
+    ? (lightness > 45 ? 'black' : 'white')
     : (lightness > 60 ? 'black' : 'white');
 
   document.body.style.setProperty('--text-color', textColor);
@@ -291,9 +291,17 @@ function setColor(input) {
 
 document.body.style.setProperty('--complementary-color', complementaryColor);
 
-  // BRAND COLOR: switch brandColor and fallback (white/black)
-  const brandFallback = isNightMode ? 'white' : 'black';
-  const finalBrand = lightness > 65 ? brandFallback : brandColor;
+  // BRAND COLOR: switch brandColor and fallback (white/basic/black)
+    let finalBrand;
+
+  if (lightness > 68) {
+    finalBrand = 'black'; // light background
+  } else if (lightness < 20) {
+    finalBrand = 'white'; // dark background
+  } else {
+    finalBrand = brandColor; // middle
+  }
+
   document.body.style.setProperty('--brand-color', finalBrand);
 
   // SET localStorage
