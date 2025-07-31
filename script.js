@@ -271,29 +271,28 @@ function setColor(input) {
   const lightness = getLightnessFromHex(input.value);
   const nightExceptions = ['clear-night', 'cloudy', 'cloudy-night', 'fog-night', 'storm-night'];
   const isNightMode = nightExceptions.some(cls => document.body.classList.contains(cls));
-
+  
   const baseColor = input.value;
   const brandColor = `oklch(from ${baseColor} calc(l * 2) calc(c * 2) h)`;
-
+  
   document.body.style.setProperty('--base-color', baseColor);
-
+  
   // TEXT COLOR: black or white
   const textColor = isNightMode
     ? (lightness > 45 ? 'black' : 'white')
     : (lightness > 60 ? 'black' : 'white');
-
+  
   document.body.style.setProperty('--text-color', textColor);
-
+  
   // COMPLEMENTARY COLOR: according to contrast (lightness)
   const complementaryColor = lightness > 17
   ? 'oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180))'
   : '#f0f0f0';
-
-document.body.style.setProperty('--complementary-color', complementaryColor);
-
+  document.body.style.setProperty('--complementary-color', complementaryColor);
+  
   // BRAND COLOR: switch brandColor and fallback (white/basic/black)
-    let finalBrand;
-
+  let finalBrand;
+  
   if (lightness > 68) {
     finalBrand = 'black'; // light background
   } else if (lightness < 20) {
@@ -301,9 +300,9 @@ document.body.style.setProperty('--complementary-color', complementaryColor);
   } else {
     finalBrand = brandColor; // middle
   }
-
+  
   document.body.style.setProperty('--brand-color', finalBrand);
-
+  
   // SET localStorage
   localStorage.setItem('baseColor', baseColor);
 }
@@ -311,11 +310,11 @@ document.body.style.setProperty('--complementary-color', complementaryColor);
 //Reading the hex
 function getLightnessFromHex(hex) {
   hex = hex.replace(/^#/, '');
-
+  
   const r = parseInt(hex.substr(0, 2), 16);
   const g = parseInt(hex.substr(2, 2), 16);
   const b = parseInt(hex.substr(4, 2), 16);
-
+  
   const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
   return +(brightness * 100).toFixed(2); // správný výstup 0–100
 }
@@ -330,20 +329,33 @@ if (themeColorMeta && baseColor) {
 }
 
 // Color input & reset button setup
-const colorInput = document.getElementById('primary_color');
-const resetIcon = document.querySelector('.reset');
+const colorInput = document.querySelectorAll('#primary_color, #primary_color_watch');
+const resetButtons = document.querySelectorAll('.reset'); // Změna: vybírám všechna reset tlačítka
 
 // Show reset button when user picks a custom color
-colorInput.addEventListener('input', () => {
-  resetIcon.style.display = 'inline-block';
+colorInput.forEach(input => {
+  input.addEventListener('input', function () {
+  setColor(this);
+  // Zobrazí všechna reset tlačítka
+  resetButtons.forEach(btn => {
+    btn.style.display = 'inline-block';
+  });
+}); 
 });
 
 //Reset button logic – restores default color and hides reset icon
-document.querySelector('.reset').addEventListener('click', () => {
-  colorInput.value = defaultColor; // set default in color picker
-  setColor(colorInput); // apply color to CSS
-  localStorage.setItem('baseColor', defaultColor); // save default to storage
-  resetIcon.style.display = 'none'; // hide reset button
+resetButtons.forEach(resetBtn => {
+  resetBtn.addEventListener('click', () => {
+    colorInput.forEach(input => {
+      input.value = defaultColor;
+      setColor(input);
+    });
+    localStorage.setItem('baseColor', defaultColor);
+    // Skryje všechna reset tlačítka
+    resetButtons.forEach(btn => {
+      btn.style.display = 'none';
+    });
+  });
 });
 
 //Load color from localStorage on page load
@@ -351,21 +363,37 @@ const storedColor = localStorage.getItem('baseColor');
 const defaultColor = '#572768';
 
 if (storedColor) {
-  // If a custom color is stored, use it
-  colorInput.value = storedColor;
-  setColor(colorInput);
-  resetIcon.style.display = storedColor !== defaultColor ? 'inline-block' : 'none';
+  colorInput.forEach(input => {
+    input.value = storedColor;
+    setColor(input);
+  });
+  // Zobrazí/skryje všechna reset tlačítka podle potřeby
+  const shouldShow = storedColor !== defaultColor;
+  resetButtons.forEach(btn => {
+    btn.style.display = shouldShow ? 'inline-block' : 'none';
+  });
 } else {
-  // Otherwise use the default color
-  colorInput.value = defaultColor;
-  setColor(colorInput);
-  resetIcon.style.display = 'none';
+  colorInput.forEach(input => {
+    input.value = defaultColor;
+    setColor(input);
+  });
+  resetButtons.forEach(btn => {
+    btn.style.display = 'none';
+  });
 }
 
-  //Set Color (calling the function)
-//   document.getElementById('primary_color').addEventListener('input', function () {
-//   setColor(this);
-// });
+// Watch mode fallback – input added after loading
+const watchInput = document.querySelector('#primary_color_watch');
+
+if (watchInput && !watchInput.dataset.bound) {
+  watchInput.addEventListener('input', function () {
+    setColor(this);
+    resetButtons.forEach(btn => {
+      btn.style.display = 'inline-block';
+    });
+  });
+  watchInput.dataset.bound = true;
+}
 
 /** 24 hours - Scrollling */
 //When clicking the right arrow – scrolls 3 forecast boxes to the right
