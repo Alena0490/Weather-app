@@ -834,23 +834,29 @@ footer .source {
         display: none;
     }
 
-    .main {
+    main {
         padding: 0.5rem;
     }
 
     .watch-color-label {
-    display: flex;
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    z-index: 900;
-}
+        display: flex;
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        z-index: 900;
+        opacity: 0.4;
+    }
+
+   .watch-color-label:hovrt,
+      .watch-color-label:active {
+        opacity: 1;
+      }
 
     .icon {
         height: 5rem;
         width: auto;
-        filter: drop-shadow(2px 4px 6px var(--shadows));
-        background-color: var(--shadows);
+        filter: drop-shadow(2px 4px 4px var(--shadows));
+        backdrop-filter: drop-shadow(2px 4px 6px black);
         border-radius: 50%;
     }
 
@@ -873,8 +879,21 @@ footer .source {
         display: none;
     }
 
+    .current-temp {
+        font-size: 4rem;
+    }
+
+    .weather-details p {
+            padding: 0.2rem 0.3rem 2.2rem 0rem;
+            font-size: 1rem;
+    }
+
     .forecast-5-day-wrapper, .forecast-24h-wrapper {
         margin-top: 1rem;
+    }
+
+    .forecast-item p {
+        font-size: 1rem;
     }
 
     footer {
