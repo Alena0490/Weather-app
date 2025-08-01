@@ -25,7 +25,8 @@ body {
      --complementary-color: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180));
      --complementary-color-shadow: oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180)/0.4);
      --complementary-color-light: oklch(from var(--complementary-color) calc(l * 5) calc(c * 0.7) calc(h + 5));
-     --shadows: rgba(0, 0, 0, 0.6);       
+     --shadows: rgba(0, 0, 0, 0.6);
+     --shadows-night: rgba(255, 255, 255, 0.6);         
     color: var(--text-color);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.875rem;  /*14px */
@@ -132,7 +133,7 @@ body.cloudy-night {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
-    background-blend-mode: hue;
+    background-blend-mode: hard-light;
 }
 
 body.fog-night {
@@ -142,6 +143,13 @@ body.fog-night {
     background-repeat: no-repeat;
     background-position: center center; 
     background-blend-mode: hue;
+}
+
+body.clear-night h2,
+body.storm-night h2,
+body.cloudy-night h2,
+body.fog-night h2 {
+    text-shadow: 0px 0px 5px var(--shadows);
 }
 
 header {
@@ -748,13 +756,13 @@ footer .source {
         flex: 1;
     }
 
-    weather-details {
+    /* .weather-details {
         display: flex;
         flex: 1;
         flex-wrap: wrap;
         justify-content: flex-start;
         align-content: flex-start;
-    }
+    } */
 
     .forecast-5-day-wrapper {
         margin-top: 0rem;
@@ -829,6 +837,17 @@ footer .source {
     
 }
 
+
+@media screen and (max-width: 368px) {
+    .weather-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+    }
+    
+}
+
+/**WATCH*/
 @media screen and (max-width: 400px) and (max-height: 500px) {
     header {
         display: none;

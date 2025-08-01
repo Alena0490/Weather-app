@@ -32,11 +32,11 @@ const sunset = new Date(`${todayDate}T${sunsetTime}:00`);
 let night = isNight(now, sunrise, sunset);
  
 // TESTING BLOCK ↓ 
-// const testWeatherCode = 0; // or null
-// let testNight = false;     //
+const testWeatherCode = 2; // or null
+let testNight = true;     //
 
-// if (testWeatherCode !== null) current.weathercode = testWeatherCode;
-// if (testNight !== null) night = testNight;
+if (testWeatherCode !== null) current.weathercode = testWeatherCode;
+if (testNight !== null) night = testNight;
 // TESTING BLOCK ↑
 
 
@@ -278,28 +278,41 @@ function setColor(input) {
   document.body.style.setProperty('--base-color', baseColor);
   
   // TEXT COLOR: black or white
-  const textColor = isNightMode
-    ? (lightness > 45 ? 'black' : 'white')
-    : (lightness > 60 ? 'black' : 'white');
-  
-  document.body.style.setProperty('--text-color', textColor);
+const nightModeLightnessThreshold = 75; // night mode (switching point)
+
+// TEXT COLOR: black or white
+const textColor = isNightMode
+  ? (lightness > nightModeLightnessThreshold ? 'black' : 'white')
+  : (lightness > 60 ? 'black' : 'white');
+
+document.body.style.setProperty('--text-color', textColor);
   
   // COMPLEMENTARY COLOR: according to contrast (lightness)
-  const complementaryColor = lightness > 17
-  ? 'oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180))'
-  : '#f0f0f0';
-  document.body.style.setProperty('--complementary-color', complementaryColor);
+const complementaryThreshold = 37; // night mode (switching point)
+
+const complementaryColor = lightness > complementaryThreshold
+  ? '#f0f0f0'
+  : 'oklch(from var(--brand-color) calc(l*1.2) c calc(h - 180))';
+
+document.body.style.setProperty('--complementary-color', complementaryColor);
+
   
   // BRAND COLOR: switch brandColor and fallback (white/basic/black)
-  let finalBrand;
-  
+let finalBrand;
+
+if (isNightMode) {
+  //Night Bacground switch between brandColor and white
+  finalBrand = lightness < 20 ? 'white' : brandColor;
+} else {
+  //Other backgrounds
   if (lightness > 68) {
-    finalBrand = 'black'; // light background
+    finalBrand = 'black';
   } else if (lightness < 20) {
-    finalBrand = 'white'; // dark background
+    finalBrand = 'white';
   } else {
-    finalBrand = brandColor; // middle
+    finalBrand = brandColor;
   }
+}
   
   document.body.style.setProperty('--brand-color', finalBrand);
   
@@ -336,7 +349,7 @@ const resetButtons = document.querySelectorAll('.reset'); // Změna: vybírám v
 colorInput.forEach(input => {
   input.addEventListener('input', function () {
   setColor(this);
-  // Zobrazí všechna reset tlačítka
+  //Show all reset buttons
   resetButtons.forEach(btn => {
     btn.style.display = 'inline-block';
   });
@@ -351,7 +364,7 @@ resetButtons.forEach(resetBtn => {
       setColor(input);
     });
     localStorage.setItem('baseColor', defaultColor);
-    // Skryje všechna reset tlačítka
+    //Hide both reset buttons
     resetButtons.forEach(btn => {
       btn.style.display = 'none';
     });
@@ -367,7 +380,7 @@ if (storedColor) {
     input.value = storedColor;
     setColor(input);
   });
-  // Zobrazí/skryje všechna reset tlačítka podle potřeby
+  // Show/hide both reset buttons
   const shouldShow = storedColor !== defaultColor;
   resetButtons.forEach(btn => {
     btn.style.display = shouldShow ? 'inline-block' : 'none';
