@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name"> Barevné počasí</string>
+    <string name="title_activity_main"> Barevné počasí</string>
+    <string name="package_name">cz.alenapumprova.pocasi</string>
+    <string name="custom_url_scheme">cz.alenapumprova.pocasi</string>
+</resources>
