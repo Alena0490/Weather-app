@@ -111,11 +111,11 @@ body.snow-night {
 
 body.clear-night {
     background: linear-gradient(var(--base-color-tr), var(--base-color-tr)),
-        url(img/milky-way-ocean.jpg);
+        url(img/clear-night.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
-    background-blend-mode: hue;
+    background-blend-mode: hard-light;
 }
 
 body.storm-night {

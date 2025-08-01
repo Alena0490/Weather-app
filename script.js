@@ -32,11 +32,11 @@ const sunset = new Date(`${todayDate}T${sunsetTime}:00`);
 let night = isNight(now, sunrise, sunset);
  
 // TESTING BLOCK ↓ 
-// const testWeatherCode = 2; // or null
-// let testNight = true;     //
+const testWeatherCode = 0; // or null
+let testNight = true;     //
 
-// if (testWeatherCode !== null) current.weathercode = testWeatherCode;
-// if (testNight !== null) night = testNight;
+if (testWeatherCode !== null) current.weathercode = testWeatherCode;
+if (testNight !== null) night = testNight;
 // TESTING BLOCK ↑
 
 
