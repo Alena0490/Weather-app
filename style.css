@@ -57,7 +57,7 @@ body.cloudy {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
-    background-blend-mode: color; 
+    background-blend-mode: hard-light; 
 }
 
 body.overcast,

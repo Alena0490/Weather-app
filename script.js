@@ -1,13 +1,40 @@
 /*** Weather + position + icon */
-//API for position
-navigator.geolocation.getCurrentPosition(pos => {
-  const { latitude, longitude } = pos.coords;
+import { Geolocation } from '@capacitor/geolocation';
+
+async function getLocationAndCity() {
+  let latitude, longitude;
+
+  // Detect if the app is running in a native environment (Android/iOS)
+  if (window.Capacitor?.isNativePlatform?.()) {
+    // ✅ Use Capacitor plugin for native geolocation (reliable on Android/iOS)
+    const position = await Geolocation.getCurrentPosition();
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+  } else {
+    // ✅ Fallback for web browsers using built-in Geolocation API
+    await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(pos => {
+        latitude = pos.coords.latitude;
+        longitude = pos.coords.longitude;
+        resolve();
+      }, reject);
+    });
+  }
+
+  // Use OpenStreetMap (Nominatim) API to convert coordinates to a city name
   fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
-  .then(res => res.json())
-  .then(geo => {
-    const city = geo.address.city || geo.address.town || geo.address.village || 'Neznámá lokalita';
-    document.querySelector('.current-location').textContent = city;
-  });
+    .then(res => res.json())
+    .then(geo => {
+      // Try to extract city, town, or village name from the response
+      const city = geo.address.city || geo.address.town || geo.address.village || 'Unknown location';
+      // Display the location name in the UI
+      document.querySelector('.current-location').textContent = city;
+    })
+    .catch(() => {
+      // Fallback in case the API call fails
+      document.querySelector('.current-location').textContent = 'Unable to load location';
+    });
+}
 
 //API for weather
 const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,uv_index_max,weathercode&hourly=temperature_2m,weathercode,windspeed_10m&timezone=Europe%2FPrague`;
@@ -151,7 +178,7 @@ weatherContainer.append(currentBox, detailsBox);
       document.querySelector('.current-weather').textContent = 'Nepodařilo se načíst data.';  // Display fallback error message
       console.error(err); // Log error for debugging
     });
-});
+;
 
 //Weather icons
 function getWeatherIcon(code, night = false) {
